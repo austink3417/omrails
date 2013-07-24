@@ -3,12 +3,12 @@ Omrails::Application.routes.draw do
 
 
   devise_for :users
-  root :to => 'pins#index'
+
 
   get 'about' => 'pages#about'
 
 
-
+  root :to => 'pins#index'
   
 
   # The priority is based upon order of creation:
