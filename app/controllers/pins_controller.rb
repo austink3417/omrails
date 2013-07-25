@@ -4,8 +4,9 @@ class PinsController < ApplicationController
 
   # GET /pins
   # GET /pins.json
+
   def index
-    @pins = Pin.order("created_at desc")
+    @pins = Pin.order("created_at desc").page(params[:page]).per_page(20)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -15,6 +16,7 @@ class PinsController < ApplicationController
 
   # GET /pins/1
   # GET /pins/1.json
+
   def show
     @pin = Pin.find(params[:id])
 
@@ -26,6 +28,7 @@ class PinsController < ApplicationController
 
   # GET /pins/new
   # GET /pins/new.json
+
   def new
     @pin = current_user.pins.new
 
@@ -42,6 +45,7 @@ class PinsController < ApplicationController
 
   # POST /pins
   # POST /pins.json
+
   def create
     @pin = current_user.pins.new(params[:pin])
 
@@ -58,6 +62,7 @@ class PinsController < ApplicationController
 
   # PUT /pins/1
   # PUT /pins/1.json
+
   def update
     @pin = current_user.pins.find(params[:id])
 
@@ -74,6 +79,7 @@ class PinsController < ApplicationController
 
   # DELETE /pins/1
   # DELETE /pins/1.json
+
   def destroy
     @pin = current_user.pins.find(params[:id])
     @pin.destroy
@@ -82,5 +88,9 @@ class PinsController < ApplicationController
       format.html { redirect_to pins_url }
       format.json { head :no_content }
     end
+  end
+
+  def pin_params
+    params.require(:pin).permit(:description, :image)
   end
 end
